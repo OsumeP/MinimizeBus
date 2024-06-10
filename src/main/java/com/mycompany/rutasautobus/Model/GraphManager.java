@@ -9,6 +9,8 @@ import java.util.List;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.util.Arrays;
+import java.util.PriorityQueue;
+import java.util.Comparator;
 /**
  *
  * @author Juand
@@ -35,7 +37,37 @@ public class GraphManager {
             }
         }
         catch (Exception e) {
-           
+            System.out.println("No se pudo leer correctamente el archivo");
         }
+    }
+    
+    public List<String> Dijsktra(String origin, String goal){
+        Comparator<Pair> comparator = (Pair o1, Pair o2) -> o1.getSecond().compareTo(o2.getSecond());
+        PriorityQueue<Pair> queue = new PriorityQueue<Pair>(comparator);
+        //Trio: Previous vertex name, cost, number of vertexs.
+        HashMap<String, Trio> track = new HashMap<String, Trio>();
+        track.put(origin, new Trio<String, Integer, Integer>(null, 0, 0));
+        queue.add(new Pair<String, Integer>(origin, 0));
+        
+        while(!queue.isEmpty()){
+            Pair node = queue.poll();
+            int cost = (Integer) node.getSecond();
+            String name = (String) node.getFirst();
+            Trio data = track.get(name);
+            
+            for(Pair i : graph.get(name)){
+                String nameChild = (String) i.getFirst();
+                int costChild = (Integer) i.getSecond();
+                
+                if(!track.containsKey( nameChild ) ){
+                    track.put((String) i.getFirst(), new Trio(name, cost + costChild,(Integer) data.getThird() + 1));
+                }
+                else if((Integer) track.get(nameChild).getSecond() > costChild + cost){
+                    track.replace(nameChild, new Trio(name, cost + costChild, (Integer) data.getThird() + 1));
+                }
+            }
+        }
+        
+        return null;
     }
 }
