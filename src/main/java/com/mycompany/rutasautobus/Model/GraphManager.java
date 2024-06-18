@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.io.File;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.Comparator;
@@ -18,9 +19,9 @@ import java.util.Comparator;
 public class GraphManager {
     HashMap<String, List<Pair>> graph;
     
-    public GraphManager(){
+    public GraphManager(File file){
         this.graph = new HashMap<String, List<Pair>>();
-        try (FileReader fr = new FileReader("D:\\1_OsumeP\\UNAL\\EstructurasDatos\\text.txt")) {
+        try (FileReader fr = new FileReader(file)) {
             BufferedReader br = new BufferedReader(fr);
             String line;
             int count = Integer.parseInt(br.readLine());
@@ -37,7 +38,7 @@ public class GraphManager {
             }
         }
         catch (Exception e) {
-            System.out.println("No se pudo leer correctamente el archivo");
+            System.out.println(e);
         }
     }
     
@@ -55,19 +56,40 @@ public class GraphManager {
             String name = (String) node.getFirst();
             Trio data = track.get(name);
             
+            if(name.compareTo(goal) == 0){
+                return RebuildPath(origin, goal, track);
+            }
+            
             for(Pair i : graph.get(name)){
                 String nameChild = (String) i.getFirst();
                 int costChild = (Integer) i.getSecond();
                 
                 if(!track.containsKey( nameChild ) ){
                     track.put((String) i.getFirst(), new Trio(name, cost + costChild,(Integer) data.getThird() + 1));
+                    queue.add(new Pair<>(nameChild, cost + costChild));
                 }
                 else if((Integer) track.get(nameChild).getSecond() > costChild + cost){
+                    track.replace(nameChild, new Trio(name, cost + costChild, (Integer) data.getThird() + 1));
+                    queue.add(new Pair<>(nameChild, cost + costChild));
+                }
+                else if((Integer) track.get(nameChild).getSecond() == costChild + cost && (Integer) track.get(nameChild).getThird() > (Integer) data.getThird() + 1){
                     track.replace(nameChild, new Trio(name, cost + costChild, (Integer) data.getThird() + 1));
                 }
             }
         }
         
         return null;
+    }
+    
+    private List<String> RebuildPath(String origin, String goal, HashMap<String, Trio> track){
+        String name = goal;
+        Trio<String, Integer, Integer> data;
+        List<String> result = new ArrayList<>((Integer) track.get(goal).getThird());
+        while(name != null){
+            data = track.get(name);
+            result.add(name);
+            name = data.getFirst();
+        }
+        return result;
     }
 }

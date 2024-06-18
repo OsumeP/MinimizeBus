@@ -3,7 +3,7 @@
  */
 
 package com.mycompany.rutasautobus;
-import com.mycompany.rutasautobus.Model.GraphManager;
+import com.mycompany.rutasautobus.View.Menu;
 
 /**
  *
@@ -13,6 +13,8 @@ import com.mycompany.rutasautobus.Model.GraphManager;
 public class RutasAutobus {
 
     public static void main(String[] args) {
-        GraphManager manager = new GraphManager();
+        Menu menu = new Menu();
+        menu.setTitle("Rutas autobus");
+        menu.setVisible(true);
     }
 }

@@ -1,3 +1,11 @@
 com\mycompany\rutasautobus\Model\Pair.class
+com\mycompany\rutasautobus\Controller\GraphController.class
 com\mycompany\rutasautobus\Model\GraphManager.class
+com\mycompany\rutasautobus\View\Menu$2.class
+com\mycompany\rutasautobus\Model\Trio.class
+com\mycompany\rutasautobus\View\Menu.class
+com\mycompany\rutasautobus\View\Menu$4.class
 com\mycompany\rutasautobus\RutasAutobus.class
+com\mycompany\rutasautobus\View\Menu$1.class
+com\mycompany\rutasautobus\View\Menu$3.class
+com\mycompany\rutasautobus\View\Menu$5.class
