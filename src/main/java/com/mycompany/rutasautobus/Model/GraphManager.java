@@ -19,13 +19,16 @@ import java.util.Comparator;
 public class GraphManager {
     HashMap<String, List<Pair>> graph;
     
+    // Metodo encargado de crear el gráfo apenas se selecciona el archivo.
     public GraphManager(File file){
         this.graph = new HashMap<String, List<Pair>>();
         try (FileReader fr = new FileReader(file)) {
             BufferedReader br = new BufferedReader(fr);
             String line;
             int count = Integer.parseInt(br.readLine());
+            // Se leen las distintas rutas
             while(count > 0 && (line = br.readLine())!= null){
+                // Lista de paradas en la ruta
                 String[] arr = line.split(" ");
                 System.out.println(Arrays.toString(arr));
                 count--;
@@ -59,7 +62,7 @@ public class GraphManager {
             if(name.compareTo(goal) == 0){
                 return RebuildPath(origin, goal, track);
             }
-            
+            if(graph.get(name) == null) continue;
             for(Pair i : graph.get(name)){
                 String nameChild = (String) i.getFirst();
                 int costChild = (Integer) i.getSecond();
