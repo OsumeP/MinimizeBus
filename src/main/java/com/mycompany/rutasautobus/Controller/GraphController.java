@@ -17,18 +17,23 @@ public class GraphController {
     
     GraphManager graphManager;
     
-
+    //Inicializa el objeto GraphManager
     public GraphController (File file){
         this.graphManager = new GraphManager(file);
     }
     
+    //Método para retornar el String que contiene la secuencia de buses
     public String getBuses(String origin, String goal){
+        
         List<String> route = graphManager.Dijsktra(origin, goal);
+        //Si es null no hay ruta.
         if(route == null){
             return "No existe una ruta para llegar desde el origen hasta la meta.";
         }
         int multiple = 1;
         StringBuilder result = new StringBuilder();
+        
+        //Ciclo que recorre la lista desde el final para crear llenar el String.
         for(int i = route.size() - 1; i >= 0; i--){
             result.append(route.get(i));
             if(i == 0){

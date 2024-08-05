@@ -71,7 +71,7 @@ public class GraphManager {
         //Arreglo de "Trio" para trackear los caminos más cortos a cada vértice.
         //Trio: vertice predecesor, costo, número de vertices.
         Trio[] track = new Trio[vertexCount];
-        
+        //Arreglo de booleanos para saber si un nodo ya fue explorado y no repetir iteraciones innecesarias.
         boolean[] completed = new boolean[vertexCount];
         
         //Si el nombre del origen o meta no esta indexado, significa que no está en el gráfo, por lo tanto no hay camino.
@@ -90,6 +90,7 @@ public class GraphManager {
             int index = this.indexes.get(name);
             Trio data = track[index];
             
+            //Si ya se había encontrado el camino más corto para el nodo actual, sigue con la siguiente iteración
             if(completed[index]){
                 continue;
             }
