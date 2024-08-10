@@ -57,7 +57,7 @@ public class GraphManager {
             }
         }
         catch (Exception e) {
-            System.out.println(e);
+            System.out.println("No elegiste ningún archivo");
         }
     }
     
